@@ -20,11 +20,11 @@ I built this to fix that. It's an AI chatbot that acts like a knowledgeable advi
 
 - **Next.js 16** (App Router) + **TypeScript**
 - **Tailwind CSS v4**
-- **OpenRouter API** — model-agnostic, swap any LLM via one env variable
+- **Groq API** — free per-user tier, fast inference, Llama 3.3 70B
 
 ## Running it locally
 
-You'll need a free [OpenRouter](https://openrouter.ai) API key.
+You'll need a free [Groq](https://console.groq.com) API key.
 
 ```bash
 git clone https://github.com/your-username/study-abroad-assistant.git
@@ -35,11 +35,11 @@ npm install
 Create a `.env.local` file:
 
 ```env
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct:free
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
 ```
 
-Any model from [openrouter.ai/models](https://openrouter.ai/models) works — just swap the model ID. Free models are available.
+Any model from [console.groq.com/docs/models](https://console.groq.com/docs/models) works — just swap the model ID.
 
 ```bash
 npm run dev
