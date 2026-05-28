@@ -1,34 +1,28 @@
 # Study Abroad Assistant
 
-An AI-powered chatbot that helps international students — especially from South Asia and Bangladesh — navigate university applications, scholarships, visa requirements, and study abroad opportunities.
+A lot of students from Bangladesh and South Asia want to study abroad but don't know where to start. The process is genuinely overwhelming — different scholarship deadlines, country-specific visa rules, APS certificates, blocked accounts, SOPs. Most people either give up early or spend weeks piecing together information from a dozen different websites.
 
-## Features
+I built this to fix that. It's an AI chatbot that acts like a knowledgeable advisor — one that knows the DAAD process, understands what Chevening looks for in an essay, and can walk you through the F-1 visa requirements without making you feel lost. You ask questions in plain language and get clear, structured answers.
 
-- Personalized guidance on universities in Germany, UK, Canada, Australia, and the USA
-- Scholarship information: DAAD, Chevening, Fulbright, Erasmus Mundus, MEXT, and more
-- Country-specific visa and document requirements
-- Language test guidance (IELTS, TOEFL, TestDaF, GRE, GMAT)
-- APS certificate guidance for Bangladeshi/Indian applicants to Germany
-- Application document tips: SOP, CV, recommendation letters
-- Suggested questions sidebar for quick access to common topics
-- Responsive design with mobile drawer navigation
-- Animated typing indicator and auto-scrolling chat
+## What it covers
 
-## Tech Stack
+- University matching based on your GPA, budget, field, and target country
+- Scholarships: DAAD, Chevening, Fulbright, Erasmus Mundus, MEXT, Australia Awards, and more
+- Visa requirements and document checklists for Germany, UK, Canada, Australia, and the USA
+- APS certificate process for Bangladeshi and Indian applicants
+- Language tests: IELTS, TOEFL, TestDaF, GRE, GMAT
+- SOP and CV writing tips, recommendation letter guidance
+- Application timelines and deadline planning
 
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS v4
-- **AI:** OpenRouter API (configurable model)
+## Built with
 
-## Getting Started
+- **Next.js 16** (App Router) + **TypeScript**
+- **Tailwind CSS v4**
+- **OpenRouter API** — model-agnostic, swap any LLM via one env variable
 
-### Prerequisites
+## Running it locally
 
-- Node.js 18+
-- An [OpenRouter](https://openrouter.ai) API key
-
-### Installation
+You'll need a free [OpenRouter](https://openrouter.ai) API key.
 
 ```bash
 git clone https://github.com/your-username/study-abroad-assistant.git
@@ -36,39 +30,30 @@ cd study-abroad-assistant
 npm install
 ```
 
-### Configuration
-
-Create a `.env.local` file in the project root:
+Create a `.env.local` file:
 
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 OPENROUTER_MODEL=google/gemma-4-26b-a4b-it:free
 ```
 
-You can swap `OPENROUTER_MODEL` for any model available at [openrouter.ai/models](https://openrouter.ai/models).
-
-### Run Locally
+Any model from [openrouter.ai/models](https://openrouter.ai/models) works — just swap the model ID. Free models are available.
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Project Structure
+## Project structure
 
 ```
 app/
-  api/chat/route.ts   # OpenRouter API handler
-  layout.tsx
+  api/chat/route.ts     # OpenRouter API handler with full system prompt
   page.tsx
 components/
-  ChatWindow.tsx      # Main chat UI and state management
-  MessageBubble.tsx   # Individual message rendering
-  Sidebar.tsx         # Suggested questions and clear chat
+  ChatWindow.tsx        # Chat UI, state, and message history
+  MessageBubble.tsx     # Message rendering with markdown support
+  Sidebar.tsx           # Suggested questions, clear chat
   SuggestedQuestions.tsx
 ```
-
-## Deployment
-
-Deploy on [Vercel](https://vercel.com) by importing the repository and adding `OPENROUTER_API_KEY` and `OPENROUTER_MODEL` as environment variables in the project settings.
