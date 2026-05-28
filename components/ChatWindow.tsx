@@ -199,7 +199,7 @@ export default function ChatWindow() {
             <h2 className="text-sm font-semibold text-slate-800">
               Study Abroad Assistant
             </h2>
-            <p className="text-xs text-slate-400">Powered by Gemini 2.0 Flash</p>
+            <p className="text-xs text-slate-400">Powered by OpenRouter</p>
           </div>
           <div className="ml-auto flex items-center gap-1.5">
             <span className="w-2 h-2 bg-green-400 rounded-full" />
