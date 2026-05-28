@@ -96,8 +96,15 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "Message is required." }, { status: 400 });
     }
 
-    const model =
-      process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.1-8b-instruct:free";
+    const primaryModel =
+      process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free";
+
+    const fallbackModels = [
+      primaryModel,
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "mistralai/mistral-7b-instruct:free",
+      "qwen/qwen-2.5-7b-instruct:free",
+    ].filter((m, i, arr) => arr.indexOf(m) === i);
 
     // Convert Gemini-style history to OpenAI-style messages
     const messages = [
@@ -109,32 +116,41 @@ export async function POST(request: NextRequest) {
       { role: "user", content: message },
     ];
 
-    const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://study-abroad-assistant-five.vercel.app",
-          "X-Title": "Study Abroad Assistant",
-        },
-        body: JSON.stringify({ model, messages }),
-      }
-    );
-
-    if (!response.ok) {
-      const err = await response.text();
-      return Response.json(
-        { error: `OpenRouter error (${response.status}): ${err}` },
-        { status: response.status }
+    let lastError = "";
+    for (const model of fallbackModels) {
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://study-abroad-assistant-five.vercel.app",
+            "X-Title": "Study Abroad Assistant",
+          },
+          body: JSON.stringify({ model, messages }),
+        }
       );
+
+      if (response.status === 429) {
+        lastError = `All models are currently rate-limited. Please try again in a moment.`;
+        continue;
+      }
+
+      if (!response.ok) {
+        const err = await response.text();
+        return Response.json(
+          { error: `OpenRouter error (${response.status}): ${err}` },
+          { status: response.status }
+        );
+      }
+
+      const data = await response.json();
+      const text = data.choices?.[0]?.message?.content ?? "";
+      return Response.json({ reply: text });
     }
 
-    const data = await response.json();
-    const text = data.choices?.[0]?.message?.content ?? "";
-
-    return Response.json({ reply: text });
+    return Response.json({ error: lastError }, { status: 429 });
   } catch (error: unknown) {
     console.error("OpenRouter API error:", error);
     const msg =
