@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": "https://study-abroad-assistant.vercel.app",
+          "HTTP-Referer": "https://study-abroad-assistant-five.vercel.app",
           "X-Title": "Study Abroad Assistant",
         },
         body: JSON.stringify({ model, messages }),
