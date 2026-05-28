@@ -36,7 +36,7 @@ Create a `.env.local` file:
 
 ```env
 OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_MODEL=google/gemma-4-26b-a4b-it:free
+OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct:free
 ```
 
 Any model from [openrouter.ai/models](https://openrouter.ai/models) works — just swap the model ID. Free models are available.
