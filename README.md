@@ -1,5 +1,7 @@
 # Study Abroad Assistant
 
+**Live:** [study-abroad-assistant-five.vercel.app](https://study-abroad-assistant-five.vercel.app)
+
 A lot of students from Bangladesh and South Asia want to study abroad but don't know where to start. The process is genuinely overwhelming — different scholarship deadlines, country-specific visa rules, APS certificates, blocked accounts, SOPs. Most people either give up early or spend weeks piecing together information from a dozen different websites.
 
 I built this to fix that. It's an AI chatbot that acts like a knowledgeable advisor — one that knows the DAAD process, understands what Chevening looks for in an essay, and can walk you through the F-1 visa requirements without making you feel lost. You ask questions in plain language and get clear, structured answers.
